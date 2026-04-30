@@ -43,6 +43,8 @@ The project implements a three-stage pipeline to transform pixels into chemistry
 
 <img width="506" height="400" alt="image" src="https://github.com/user-attachments/assets/1a124b5f-5e53-47a4-8163-a7edbfc02d79" />
 
+<img width="871" height="612" alt="image" src="https://github.com/user-attachments/assets/c066aeaa-b5cb-4e13-ba7a-447e9a13838b" />
+
 <img width="401" height="184" alt="image" src="https://github.com/user-attachments/assets/54c66ebe-383c-4253-825d-1f98887ffedb" />
 
 ---
