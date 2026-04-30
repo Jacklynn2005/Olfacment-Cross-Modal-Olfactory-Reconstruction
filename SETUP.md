@@ -30,64 +30,72 @@ pip install diffusers transformers
 
 # Install data processing and utility libraries
 pip install pandas scikit-learn pillow tqdm matplotlib
+```
 
 ## 3. Data Preparation
-Dataset Acquisition
+### Dataset Acquisition
 
 Ensure the NYC Smells dataset (Voxel51) is structured correctly in your data directory:
 
-Plaintext
+```Plaintext
 data/
 └── nyc_smells/
     ├── images/
     └── signals/ (32-channel .npy or .h5 files)
-Partitioning & Stratification
+```
+    
+### Partitioning & Stratification
 
 Run the stratification script to ensure that samples from the same Object ID are grouped together to prevent data leakage.
 
-Bash
+```bash
 python scripts/partition_data.py --metadata metadata.csv --output_dir ./indices/
 This will generate train_ids.txt, val_ids.txt, and test_ids.txt.
+```
 
-Calibration
+### Calibration
 
 Before training the VAE, calculate the per-channel normalization constants to handle the varying physical resistances of the 32 sensors.
 
-Bash
+```bash
 python scripts/calculate_constants.py --train_ids ./indices/train_ids.txt
 Output: sensor_metadata.pt
+```
 
 ## 4. Execution Pipeline
 The project must be trained in a specific modular sequence. Each stage saves checkpoints that are required by the subsequent stage.
 
-Step 1: Signal VAE Training
+### Step 1: Signal VAE Training
 
 Train the VAE to learn the "grammar" of the olfactory signals.
 
-Bash
+```bash
 python train_vae.py --config configs/vae_config.yaml
 Target Output: checkpoints/best_vae.pt
+```
 
-Step 2: COIP Alignment
+### Step 2: COIP Alignment
 
 Train the Vision and Olfactory encoders to align in a shared latent space.
 
-Bash
+```bash
 python train_coip.py --vae_path checkpoints/best_vae.pt
 Target Output: checkpoints/best_coip.pt
+```
 
-Step 3: Latent Diffusion Training
+### Step 3: Latent Diffusion Training
 
 Train the U-Net sculptor to generate scent latents guided by image features.
 
-Bash
+```bash
 python train_diffusion.py --vae_path checkpoints/best_vae.pt --coip_path checkpoints/best_coip.pt
 Target Output: checkpoints/best_diffusion_unet.pt
+```
 
-5. Inference & Evaluation
+## 5. Inference & Evaluation
 To generate a fragrance recommendation from a single image, use the provided ScentInferenceSystem wrapper.
 
-Python
+```Python
 
 from inference import ScentInferenceSystem
 
@@ -101,3 +109,4 @@ weight_paths = {
 # Run System
 system = ScentInferenceSystem(weight_paths=weight_paths, meta_path='sensor_metadata.pt')
 result = system.predict_scent("path/to/image.jpg")
+```
