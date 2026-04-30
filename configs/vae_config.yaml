@@ -1,0 +1,22 @@
+metadata_csv: ny_smells_local/metadata.csv
+image_dir: ny_smells_local/images
+signal_dir: ny_smells_local/signals_raw
+
+save_dir: checkpoints
+save_name: best_vae.pt
+metadata_save_name: sensor_metadata.pt
+
+random_seed: 42
+run_small: true
+train_limit: 3000
+val_limit: 500
+
+batch_size: 8
+num_workers: 0
+
+epochs: 5
+lr: 0.0001
+weight_decay: 0.0001
+
+signal_latent_dim: 128
+vit_model_name: google/vit-base-patch16-224
