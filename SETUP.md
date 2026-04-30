@@ -1,4 +1,4 @@
-setup_content = """# Setup and Installation Guide: Olfacment
+# Setup and Installation Guide: Olfacment
 
 This guide provides the necessary steps to configure the environment, prepare the dataset, and execute the training pipeline for the cross-modal olfactory reconstruction project.
 
